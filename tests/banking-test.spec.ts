@@ -2,63 +2,43 @@
 // Will be implemented by live exploration
 
 import { test, expect } from '@playwright/test';
+import { LoginPage } from '../pages/LoginPage';
+import { HomePage } from '../pages/HomePage';
+import { QuickTransactionPage } from '../pages/QuickTransactionPage';
+import { TransactionHistoryPage } from '../pages/TransactionHistoryPage';
+import config from '../config.json';
 
 test('Verify Quick Transactions Flow', async ({ page }) => {
+  // Instantiate page objects
+  const loginPage = new LoginPage(page);
+  const homePage = new HomePage(page);
+  const quickTransactionPage = new QuickTransactionPage(page);
+  const transactionHistoryPage = new TransactionHistoryPage(page);
+
   // Navigate to the login page
-  await page.goto('https://bakkappan.github.io/Testers-Talk-Practice-Site/');
+  await loginPage.goto(config.url);
 
-  // Enter username & password as TestersTalk
-  await page.getByRole('textbox', { name: /username/i }).fill('TestersTalk');
-  await page.getByRole('textbox', { name: /password/i }).fill('TestersTalk');
-
-  // Select App Name as Banking
-  await page.getByRole('combobox', { name: /app name/i }).selectOption({ label: 'Banking' });
-
-  // Click Login
-  await page.getByRole('button', { name: /login/i }).click();
-
-  // Wait for navigation to Banking Project Demo
-  await page.waitForURL(/Banking-Project-Demo\.html/, { timeout: 10000 });
-
-  // Verify URL contains "Banking-Project-Demo.html"
+  // Login
+  await loginPage.login(config.username, config.password, config.appName);
+  await loginPage.waitForURL(/Banking-Project-Demo\.html/);
   expect(page.url()).toContain('Banking-Project-Demo.html');
 
-  // Verify page header
-  await expect(page.getByRole('heading', { name: /sample banking application/i })).toBeVisible({ timeout: 5000 });
+  // Home page assertions
+  await homePage.verifyHeader();
+  await homePage.verifyWelcomeText();
+  await homePage.clickQuickTransactions();
 
-  // Verify welcome text
-  await expect(page.getByText('Welcome to the Testers Talk Banking Application')).toBeVisible({ timeout: 5000 });
+  // Quick Transaction
+  await quickTransactionPage.selectTransactionType('Transfer');
+  await quickTransactionPage.fillTransferFields('654321', '100', 'Test transfer');
+  await quickTransactionPage.submit();
+  await quickTransactionPage.confirm();
 
-  // Click on Quick Transactions link
-  await page.getByRole('link', { name: /quick transactions/i }).click();
-
-  // Select Transaction Type as Transfer
-  await page.getByRole('combobox', { name: /transaction type/i }).selectOption({ label: 'Transfer' });
-
-
-  // Fill all other mandatory fields for Transfer
-  // 'Transfer to Account' field
-  await page.getByRole('textbox', { name: /transfer to account/i }).fill('654321');
-  // 'Amount ($): *' field
-  await page.getByRole('spinbutton', { name: /amount/i }).fill('100');
-  // 'Description: *' field
-  await page.getByRole('textbox', { name: /description/i }).fill('Test transfer');
-
-  // Click Submit
-  await page.getByRole('button', { name: /submit/i }).click();
-
-  // Click Confirm
-  await page.getByRole('button', { name: /confirm/i }).click();
-
-
-  // Note down Transaction Reference number (format: TXN-...)
-  const refLocator = page.getByText(/Transaction Reference:/i).locator('..').locator('..').getByText(/^TXN-/);
-  const transactionRef = await refLocator.textContent();
+  // Get Transaction Reference
+  const transactionRef = await quickTransactionPage.getTransactionReference();
   expect(transactionRef).toBeTruthy();
 
-  // Go to Transaction History
-  await page.getByRole('link', { name: /transaction history/i }).click();
-
-  // Verify Transaction Reference number in the Transaction History (use small tag with Ref: prefix)
-  await expect(page.locator(`small:has-text('Ref: ${transactionRef}')`)).toBeVisible({ timeout: 5000 });
+  // Transaction History
+  await transactionHistoryPage.open();
+  await transactionHistoryPage.verifyTransactionReference(transactionRef!);
 });
