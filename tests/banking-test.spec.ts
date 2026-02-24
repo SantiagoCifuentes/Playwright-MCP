@@ -7,6 +7,7 @@ import { HomePage } from '../pages/HomePage';
 import { QuickTransactionPage } from '../pages/QuickTransactionPage';
 import { TransactionHistoryPage } from '../pages/TransactionHistoryPage';
 import config from '../config.json';
+import transferData from '../test-data/Transfer_TestData.json';
 
 test('Verify Quick Transactions Flow', async ({ page }) => {
   // Instantiate page objects
@@ -29,8 +30,12 @@ test('Verify Quick Transactions Flow', async ({ page }) => {
   await homePage.clickQuickTransactions();
 
   // Quick Transaction
-  await quickTransactionPage.selectTransactionType('Transfer');
-  await quickTransactionPage.fillTransferFields('654321', '100', 'Test transfer');
+  await quickTransactionPage.selectTransactionType(transferData.transactionType);
+  await quickTransactionPage.fillTransferFields(
+    transferData.toAccount,
+    transferData.amount,
+    transferData.description
+  );
   await quickTransactionPage.submit();
   await quickTransactionPage.confirm();
 
