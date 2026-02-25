@@ -1,0 +1,23 @@
+[
+  {
+    "billType": "Water",
+    "serviceProvider": "AquaCorp",
+    "accountReference": "ACC-123-456",
+    "amount": "45",
+    "paymentMethod": "Credit Card"
+  },
+  {
+    "billType": "Electricity",
+    "serviceProvider": "ElectroCorp",
+    "accountReference": "EL-987-654",
+    "amount": "75",
+    "paymentMethod": "Checking Account"
+  },
+  {
+    "billType": "Internet",
+    "serviceProvider": "WebFast",
+    "accountReference": "NET-555-999",
+    "amount": "30",
+    "paymentMethod": "Savings Account"
+  }
+]
