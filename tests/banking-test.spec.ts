@@ -1,3 +1,25 @@
+
+test('Verify tab names in the homepage', async ({ page }) => {
+  // Instantiate page objects
+  const loginPage = new LoginPage(page);
+  const homePage = new HomePage(page);
+
+  // Navigate to the login page
+  await loginPage.goto(config.url);
+
+  // Login
+  await loginPage.login(config.username, config.password, config.appName);
+  await loginPage.waitForURL(/Banking-Project-Demo\.html/);
+  expect(page.url()).toContain('Banking-Project-Demo.html');
+
+  // Home page assertions
+  await homePage.verifyHeader();
+  await homePage.verifyWelcomeText();
+
+  // Verify Transfers & Bill Payments tabs are visible
+  await homePage.verifyTransfersTabVisible();
+  await homePage.verifyBillPaymentsTabVisible();
+});
 // Playwright MCP test for Quick Transactions Flow
 // Will be implemented by live exploration
 

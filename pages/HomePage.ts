@@ -17,4 +17,12 @@ export class HomePage extends BasePage {
   async clickQuickTransactions() {
     await this.page.getByRole('link', { name: /quick transactions/i }).click();
   }
+
+  async verifyTransfersTabVisible() {
+    await this.expectVisible(this.page.getByRole('button', { name: /transfers/i }));
+  }
+
+  async verifyBillPaymentsTabVisible() {
+    await this.expectVisible(this.page.getByRole('button', { name: /bill payments?/i }));
+  }
 }
