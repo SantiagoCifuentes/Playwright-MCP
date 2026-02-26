@@ -41,16 +41,20 @@ pipeline {
         stage('Run Tests') {
             steps {
                 script {
-                    def cmd = 'npx playwright test --project=chromium --project=firefox' // //using only chromium and firefox.. for what I have read for some reason webkit is unstable in windows, so I will not use it for now, but it can be added if needed
-            }
+                    def cmd = 'npx playwright test --project=chromium --project=firefox'
+                    // Using only chromium and firefox.
+                    // WebKit is unstable on Windows CI for now.
+
                     if (params.SMOKE) {
                         echo 'Running smoke tests only'
                         cmd += ' --grep @smoke'
                     }
+
                     bat cmd
                 }
             }
         }
+        
 
     }
 
