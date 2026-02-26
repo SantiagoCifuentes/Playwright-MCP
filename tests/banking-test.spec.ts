@@ -126,7 +126,7 @@ test('Account Management - verify account details and change account type', asyn
   expect(selectedLabel?.trim()).toBe('Checking Account');
 });
 
-test('Bill Payments - pay electricity bill using checking account', async ({ page }) => {
+test(' @smoke Bill Payments - pay electricity bill using checking account', async ({ page }) => {
   const loginPage = new LoginPage(page);
   const homePage = new HomePage(page);
   const billPaymentsPage = new BillPaymentsPage(page);
