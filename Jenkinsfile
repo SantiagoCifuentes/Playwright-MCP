@@ -65,7 +65,10 @@ pipeline {
             publishHTML([
                 reportDir: 'playwright-report',
                 reportFiles: 'index.html',
-                reportName: 'Playwright Report'
+                reportName: 'Playwright Report',
+                allowMissing: false,
+                alwaysLinkToLastBuild: true,
+                keepAll: true
             ])
         }
         failure {
