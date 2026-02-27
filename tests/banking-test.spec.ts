@@ -131,9 +131,11 @@ test(' @smoke Bill Payments - pay electricity bill using checking account', asyn
   const homePage = new HomePage(page);
   const billPaymentsPage = new BillPaymentsPage(page);
 
+  
   await loginPage.goto(config.url);
   await loginPage.login(config.username, config.password, config.appName);
   await loginPage.waitForURL(/Banking-Project-Demo\.html/);
+
 
   await homePage.verifyHeader();
   await billPaymentsPage.open();

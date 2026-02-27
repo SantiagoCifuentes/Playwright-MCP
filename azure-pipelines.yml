@@ -23,6 +23,8 @@ steps:
   displayName: Run Smoke Tests
   env:
     BASE_URL: $(BASE_URL)
+    USERNAME: $(USERNAME)
+    PASSWORD: $(PASSWORD)
 
 - task: PublishTestResults@2
   inputs:
