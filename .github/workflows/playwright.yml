@@ -3,8 +3,8 @@ name: Playwright Tests
 on:
   push:
     branches: [ main ]
-  pull_request:
-    branches: [ main ]
+
+  workflow_dispatch:
 
 jobs:
   test:
@@ -12,7 +12,6 @@ jobs:
 
     env:
       BASE_URL: https://bakkappan.github.io/Testers-Talk-Practice-Site/
-      TEST_TAG: '@smoke'
 
     steps:
     - name: Checkout repository
@@ -29,8 +28,15 @@ jobs:
     - name: Install Playwright browsers
       run: npx playwright install --with-deps
 
-    - name: Run Playwright tests
-      run: npx playwright test --grep @smoke
+    - name: Run tests
+      run: |
+        if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+          echo "Running full suite"
+          npx playwright test
+        else
+          echo "Running smoke tests"
+          npx playwright test --grep "@smoke"
+        fi
       env:
         USERNAME: ${{ secrets.USERNAME }}
         PASSWORD: ${{ secrets.PASSWORD }}

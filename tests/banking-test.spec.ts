@@ -149,7 +149,7 @@ test(' @smoke Bill Payments - pay electricity bill using checking account', asyn
   await billPaymentsPage.verifySuccess();
 });
 
-test('Bill Payments - pay internet bill using savings account', async ({ page }) => {
+test('@smoke Bill Payments - pay internet bill using savings account', async ({ page }) => {
   const loginPage = new LoginPage(page);
   const homePage = new HomePage(page);
   const billPaymentsPage = new BillPaymentsPage(page);
@@ -172,7 +172,7 @@ test('Bill Payments - pay internet bill using savings account', async ({ page })
 
 
 
-test('Login - Remember me persists username', async ({ page }) => {
+test('@smoke Login - Remember me persists username', async ({ page }) => {
   // On the login page, check Remember me persists the username
   await page.goto(config.url);
   await page.getByRole('textbox', { name: /username/i }).fill(config.username);
