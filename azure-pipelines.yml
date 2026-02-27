@@ -4,6 +4,9 @@ trigger:
 pool:
   vmImage: 'ubuntu-latest'
 
+variables:
+  BASE_URL: 'https://bakkappan.github.io/Testers-Talk-Practice-Site/'
+
 steps:
 - task: NodeTool@0
   inputs:
@@ -17,7 +20,9 @@ steps:
   displayName: 'Install Playwright Browsers'
 
 - script: npx playwright test --grep @smoke
-  displayName: 'Run Smoke tests'
+  displayName: Run Smoke Tests
+  env:
+    BASE_URL: $(BASE_URL)
 
 - task: PublishTestResults@2
   inputs:

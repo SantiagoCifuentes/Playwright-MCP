@@ -1,6 +1,6 @@
 import { test, expect } from './fixtures';
 import { LoginPage, HomePage, QuickTransactionPage, TransactionHistoryPage, BillPaymentsPage } from '../pages';
-import config from '../config.json';
+import { config } from '../config/environment';
 // test data injected via fixture as `testData`
 
 test('Verify tab names in the homepage', async ({ page }) => {
