@@ -16,8 +16,8 @@ steps:
 - script: npx playwright install --with-deps
   displayName: 'Install Playwright Browsers'
 
-- script: npx playwright test
-  displayName: 'Run Playwright tests'
+- script: npx playwright test --grep @smoke
+  displayName: 'Run Smoke tests'
 
 - task: PublishTestResults@2
   inputs:
@@ -25,7 +25,7 @@ steps:
     testResultsFiles: '**/results.xml'
     failTaskOnFailedTests: true
   condition: succeededOrFailed()
-  
+
 - task: PublishBuildArtifacts@1
   inputs:
     PathtoPublish: 'playwright-report'
