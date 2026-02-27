@@ -61,7 +61,8 @@ pipeline {
     post {
         always {
             archiveArtifacts artifacts: 'playwright-report/**/*', fingerprint: true
-            echo 'Pipeline finished.'
+            junit 'test-results/results.xml'
+           
             publishHTML([
                 reportDir: 'playwright-report',
                 reportFiles: 'index.html',
@@ -70,6 +71,7 @@ pipeline {
                 alwaysLinkToLastBuild: true,
                 keepAll: true
             ])
+             echo 'Pipeline finished.'
         }
         failure {
             echo 'Tests failed.'
