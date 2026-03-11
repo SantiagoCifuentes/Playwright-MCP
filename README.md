@@ -2,6 +2,16 @@
 
 End-to-end UI test automation project using **Playwright + TypeScript** with the **Page Object Model (POM)** pattern.
 
+## Purpose
+
+This repository explores the integration of Playwright with MCP servers
+to allow AI agents to interact with web applications through browser automation.
+
+## Goal
+- Experiment with AI-assisted testing
+- Evaluate MCP capabilities for UI automation
+- Learn how LLM agents interact with Playwright
+
 The suite validates flows in the demo banking app:
 - Login and homepage checks
 - Quick transactions
