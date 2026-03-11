@@ -31,6 +31,10 @@ Jenkinsfile            Jenkins pipeline
 .github/workflows/     GitHub Actions workflow
 ```
 
+## Tests target the public demo banking application:
+
+https://bakkappan.github.io/Testers-Talk-Practice-Site/
+
 ## Prerequisites
 1. Install Node.js 18 or newer.
 2. Install dependencies:
